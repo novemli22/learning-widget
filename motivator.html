@@ -1,67 +1,66 @@
 <!DOCTYPE html>
-<html lang="id">
-
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Semangat Belajar, Novem!</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      background: linear-gradient(135deg, #f0f0f0, #dff6ff);
-      text-align: center;
-      color: #333;
-    }
-
-    #greeting {
-      font-size: 1.6rem;
-      font-weight: 700;
-    }
-
-    #quote {
-      font-size: 1.2rem;
-      font-style: italic;
-      margin-top: 1rem;
-      max-width: 80%;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motivator</title>
+    <style>
+        /* Default style untuk body */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            transition: background-image 1s ease;
+        }
+        /* Styling untuk ucapan */
+        .message {
+            font-size: 3rem;
+            font-weight: bold;
+            z-index: 10; /* supaya pesan tetap di depan */
+        }
+    </style>
 </head>
-
 <body>
-  <div id="greeting">Hello, Novem!</div>
-  <div id="quote">Keep going!</div>
 
-  <script>
-    const quotes = [
-      "Keep going, you're building your future! 🚀",
-      "Every line of code gets you closer to mastery. 💻",
-      "Trust the process. You're learning. 📚",
-      "Code. Debug. Repeat. 🔁",
-      "Done is better than perfect. Keep shipping! ✅"
-    ];
+    <div class="message" id="greeting-message"></div>
 
-    const hour = new Date().getHours();
-    const greetingBox = document.getElementById("greeting");
-    const quoteBox = document.getElementById("quote");
+    <script>
+        // Fungsi untuk mengambil waktu saat ini dan ubah ucapan serta background
+        function updateGreeting() {
+            var date = new Date();
+            var hours = date.getHours();
+            var greetingMessage = "";
+            var backgroundImage = "";
 
-    let greeting;
-    if (hour < 12) {
-      greeting = "Selamat pagi, Novem! ⛅️";
-    } else if (hour < 18) {
-      greeting = "Selamat siang, keep coding! ☀️";
-    } else {
-      greeting = "Selamat malam, jangan lupa istirahat 🌙";
-    }
+            // Ubah ucapan dan background sesuai jam
+            if (hours >= 5 && hours < 12) {
+                greetingMessage = "Selamat Pagi!";
+                backgroundImage = "url('https://i.pinimg.com/736x/31/a4/fd/31a4fdcae07aaf3ab50026e5bae5aa19.jpg')"; // Gambar untuk pagi
+            } else if (hours >= 12 && hours < 18) {
+                greetingMessage = "Selamat Siang!";
+                backgroundImage = "url('https://i.pinimg.com/736x/9a/0d/1d/9a0d1d89dc7dc6aebd033f19061e2ace.jpg')"; // Gambar untuk siang
+            } else {
+                greetingMessage = "Selamat Malam!";
+                backgroundImage = "url('https://i.pinimg.com/736x/9d/69/d8/9d69d88ad9e9b3f8794af7b7807e1ce9.jpg')"; // Gambar untuk malam
+            }
 
-    greetingBox.innerText = greeting;
-    quoteBox.innerText = quotes[Math.floor(Math.random() * quotes.length)];
-  </script>
+            // Tampilkan pesan
+            document.getElementById("greeting-message").textContent = greetingMessage;
+            
+            // Ubah background image
+            document.body.style.backgroundImage = backgroundImage;
+        }
+
+        // Panggil fungsi saat halaman dimuat
+        window.onload = updateGreeting;
+    </script>
+
 </body>
-
 </html>
