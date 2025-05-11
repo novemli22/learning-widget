@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Semangat Belajar, Novem!</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #f0f0f0, #dff6ff);
+      text-align: center;
+      color: #333;
+    }
+
+    #greeting {
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+
+    #quote {
+      font-size: 1.2rem;
+      font-style: italic;
+      margin-top: 1rem;
+      max-width: 80%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="greeting">Hello, Novem!</div>
+  <div id="quote">Keep going!</div>
+
+  <script>
+    const quotes = [
+      "Keep going, you're building your future! 🚀",
+      "Every line of code gets you closer to mastery. 💻",
+      "Trust the process. You're learning. 📚",
+      "Code. Debug. Repeat. 🔁",
+      "Done is better than perfect. Keep shipping! ✅"
+    ];
+
+    const hour = new Date().getHours();
+    const greetingBox = document.getElementById("greeting");
+    const quoteBox = document.getElementById("quote");
+
+    let greeting;
+    if (hour < 12) {
+      greeting = "Selamat pagi, Novem! ⛅️";
+    } else if (hour < 18) {
+      greeting = "Selamat siang, keep coding! ☀️";
+    } else {
+      greeting = "Selamat malam, jangan lupa istirahat 🌙";
+    }
+
+    greetingBox.innerText = greeting;
+    quoteBox.innerText = quotes[Math.floor(Math.random() * quotes.length)];
+  </script>
+</body>
+
+</html>
