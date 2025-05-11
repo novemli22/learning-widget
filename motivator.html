@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Motivator</title>
   <style>
-    /* Default style untuk body */
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
       height: 100vh;
       margin: 0;
       background-size: cover;
@@ -22,72 +21,127 @@
       transition: background-image 1s ease;
     }
 
-    /* Styling untuk ucapan */
-    .message {
+    h1 {
       font-size: 3rem;
       font-weight: bold;
-      z-index: 10;
+      margin: 0 0 10px;
     }
 
-    /* Styling untuk quotes */
+    h2 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin: 0 0 20px;
+    }
+
     .quote {
       font-size: 1.5rem;
-      margin-top: 20px;
-      font-style: italic;
-      z-index: 10;
+      margin-bottom: 20px;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .date {
+      font-size: 1.2rem;
+    }
+
+    .overlay {
+      backdrop-filter: blur(4px);
+      background-color: rgba(0, 0, 0, 0.3);
+      padding: 30px;
+      border-radius: 20px;
     }
   </style>
 </head>
 
 <body>
-
-  <div class="message" id="greeting-message"></div>
-  <div class="quote" id="quote-message"></div>
+  <div class="overlay">
+    <h1 id="greeting-message"></h1>
+    <h2 id="clock"></h2>
+    <div class="quote" id="quote"></div>
+    <div class="date" id="date"></div>
+  </div>
 
   <script>
     const quotes = [
-      "Keep going, you're building your future! 🚀",
-      "Every line of code gets you closer to mastery. 💻",
-      "Trust the process. You're learning. 📚",
-      "Code. Debug. Repeat. 🔁",
-      "Done is better than perfect. Keep shipping! ✅"
+      "Keep going, you're building your future!",
+      "Every line of code gets you closer to mastery.",
+      "Trust the process. You're learning.",
+      "Code. Debug. Repeat.",
+      "Done is better than perfect. Keep shipping!"
     ];
 
-    // Fungsi untuk mengambil waktu saat ini dan ubah ucapan serta background
     function updateGreeting() {
-      var date = new Date();
-      var hours = date.getHours();
-      var greetingMessage = "";
-      var backgroundImage = "";
-      var quoteMessage = "";
+      const hour = new Date().getHours();
+      const greetingBox = document.getElementById("greeting-message");
+      let greeting = "";
+      let background = "";
 
-      // Ubah ucapan dan background sesuai jam
-      if (hours >= 5 && hours < 10) {
-        greetingMessage = "Selamat Pagi! ⛅️";
-        backgroundImage = "url('https://i.pinimg.com/736x/31/a4/fd/31a4fdcae07aaf3ab50026e5bae5aa19.jpg')"; // Gambar untuk pagi
-        quoteMessage = quotes[0]; // Pagi
-      } else if (hours >= 10 && hours < 18) {
-        greetingMessage = "Selamat Siang! ☀️";
-        backgroundImage = "url('https://i.pinimg.com/736x/9a/0d/1d/9a0d1d89dc7dc6aebd033f19061e2ace.jpg')"; // Gambar untuk siang
-        quoteMessage = quotes[1]; // Siang
+      if (hour >= 5 && hour < 12) {
+        greeting = "Selamat Pagi, Novem! ⛅️";
+        background = "url('https://i.pinimg.com/736x/31/a4/fd/31a4fdcae07aaf3ab50026e5bae5aa19.jpg')";
+      } else if (hour >= 12 && hour < 18) {
+        greeting = "Selamat Siang, semangat Novem! ☀️";
+        background = "url('https://i.pinimg.com/736x/9a/0d/1d/9a0d1d89dc7dc6aebd033f19061e2ace.jpg')";
       } else {
-        greetingMessage = "Selamat Malam! 🌙";
-        backgroundImage = "url('https://i.pinimg.com/736x/9d/69/d8/9d69d88ad9e9b3f8794af7b7807e1ce9.jpg')"; // Gambar untuk malam
-        quoteMessage = quotes[2]; // Malam
+        greeting = "Selamat Malam, jangan lupa istirahat 🌙";
+        background = "url('https://i.pinimg.com/736x/9d/69/d8/9d69d88ad9e9b3f8794af7b7807e1ce9.jpg')";
       }
 
-      // Tampilkan greeting dan quote
-      document.getElementById("greeting-message").textContent = greetingMessage;
-      document.getElementById("quote-message").textContent = quoteMessage;
-
-      // Ubah background image
-      document.body.style.backgroundImage = backgroundImage;
+      greetingBox.textContent = greeting;
+      document.body.style.backgroundImage = background;
     }
 
-    // Panggil fungsi saat halaman dimuat
-    window.onload = updateGreeting;
-  </script>
+    function updateClock() {
+      const now = new Date();
+      const clockBox = document.getElementById("clock");
 
+      let hours = now.getHours().toString().padStart(2, '0');
+      let minutes = now.getMinutes().toString().padStart(2, '0');
+      let seconds = now.getSeconds().toString().padStart(2, '0');
+
+      clockBox.textContent = `${hours}:${minutes}:${seconds}`;
+    }
+
+    function updateDate() {
+      const now = new Date();
+      const dateBox = document.getElementById("date");
+
+      const hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+      const bulan = [
+        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+      ];
+
+      const hariIni = hari[now.getDay()];
+      const tanggal = now.getDate();
+      const namaBulan = bulan[now.getMonth()];
+      const tahun = now.getFullYear();
+
+      dateBox.textContent = `${hariIni}, ${tanggal} ${namaBulan} ${tahun}`;
+    }
+
+    function rotateQuotes() {
+      const quoteBox = document.getElementById("quote");
+      let index = 0;
+      quoteBox.textContent = quotes[index];
+
+      setInterval(() => {
+        index = (index + 1) % quotes.length;
+        quoteBox.style.opacity = 0;
+        setTimeout(() => {
+          quoteBox.textContent = quotes[index];
+          quoteBox.style.opacity = 1;
+        }, 500);
+      }, 10000); // setiap 10 detik
+    }
+
+    window.onload = () => {
+      updateGreeting();
+      updateDate();
+      updateClock();
+      rotateQuotes();
+      setInterval(updateClock, 1000);
+    };
+  </script>
 </body>
 
 </html>
