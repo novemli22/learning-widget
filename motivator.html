@@ -1,66 +1,73 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Motivator</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Segoe UI', sans-serif;
+      height: 100vh;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
+      flex-direction: column;
+      text-align: center;
       background-size: cover;
       background-position: center;
-      color: white;
-      text-align: center;
+      color: #fff;
+      padding: 20px;
       transition: background-image 1s ease;
     }
 
     h1 {
-      font-size: 3rem;
-      font-weight: bold;
-      margin: 0 0 10px;
+      font-size: 2rem;
+      margin-bottom: 10px;
     }
 
     h2 {
-      font-size: 2.5rem;
-      font-weight: bold;
-      margin: 0 0 20px;
-    }
-
-    .quote {
       font-size: 1.5rem;
-      margin-bottom: 20px;
-      transition: opacity 0.5s ease-in-out;
+      font-weight: bold;
+      margin-bottom: 15px;
     }
 
-    .date {
-      font-size: 1.2rem;
+    #quote {
+      font-size: 1.1rem;
+      font-style: italic;
+      max-width: 600px;
     }
 
-    .overlay {
-      backdrop-filter: blur(4px);
-      background-color: rgba(0, 0, 0, 0.3);
-      padding: 30px;
-      border-radius: 20px;
+    #date {
+      margin-top: 15px;
+      font-size: 0.95rem;
+      opacity: 0.8;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.5rem; }
+      h2 { font-size: 1.2rem; }
+      #quote { font-size: 1rem; }
     }
   </style>
 </head>
-
 <body>
-  <div class="overlay">
-    <h1 id="greeting-message"></h1>
-    <h2 id="clock"></h2>
-    <div class="quote" id="quote"></div>
-    <div class="date" id="date"></div>
-  </div>
+  <h1 id="greeting">Halo, Novem!</h1>
+  <h2 id="clock">--:--:--</h2>
+  <div id="quote">Loading quote...</div>
+  <div id="date"></div>
 
   <script>
+    const greetingEl = document.getElementById("greeting");
+    const clockEl = document.getElementById("clock");
+    const quoteEl = document.getElementById("quote");
+    const dateEl = document.getElementById("date");
+
     const quotes = [
       "Keep going, you're building your future!",
       "Every line of code gets you closer to mastery.",
@@ -69,79 +76,52 @@
       "Done is better than perfect. Keep shipping!"
     ];
 
-    function updateGreeting() {
+    function updateGreetingAndBackground() {
       const hour = new Date().getHours();
-      const greetingBox = document.getElementById("greeting-message");
       let greeting = "";
-      let background = "";
+      let bg = "";
 
-      if (hour >= 5 && hour < 12) {
+      if (hour < 12) {
         greeting = "Selamat Pagi, Novem! ⛅️";
-        background = "url('https://i.pinimg.com/736x/31/a4/fd/31a4fdcae07aaf3ab50026e5bae5aa19.jpg')";
-      } else if (hour >= 12 && hour < 18) {
-        greeting = "Selamat Siang, semangat Novem! ☀️";
-        background = "url('https://i.pinimg.com/736x/9a/0d/1d/9a0d1d89dc7dc6aebd033f19061e2ace.jpg')";
+        bg = "url('https://i.pinimg.com/736x/31/a4/fd/31a4fdcae07aaf3ab50026e5bae5aa19.jpg')";
+      } else if (hour < 18) {
+        greeting = "Selamat Siang, keep coding! ☀️";
+        bg = "url('https://i.pinimg.com/736x/9a/0d/1d/9a0d1d89dc7dc6aebd033f19061e2ace.jpg')";
       } else {
         greeting = "Selamat Malam, jangan lupa istirahat 🌙";
-        background = "url('https://i.pinimg.com/736x/9d/69/d8/9d69d88ad9e9b3f8794af7b7807e1ce9.jpg')";
+        bg = "url('https://i.pinimg.com/736x/9d/69/d8/9d69d88ad9e9b3f8794af7b7807e1ce9.jpg')";
       }
 
-      greetingBox.textContent = greeting;
-      document.body.style.backgroundImage = background;
+      greetingEl.textContent = greeting;
+      document.body.style.backgroundImage = bg;
     }
 
     function updateClock() {
       const now = new Date();
-      const clockBox = document.getElementById("clock");
-
-      let hours = now.getHours().toString().padStart(2, '0');
-      let minutes = now.getMinutes().toString().padStart(2, '0');
-      let seconds = now.getSeconds().toString().padStart(2, '0');
-
-      clockBox.textContent = `${hours}:${minutes}:${seconds}`;
+      const jam = now.toLocaleTimeString("id-ID", { hour12: false });
+      clockEl.textContent = jam;
     }
 
     function updateDate() {
       const now = new Date();
-      const dateBox = document.getElementById("date");
-
-      const hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-      const bulan = [
-        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
-      ];
-
-      const hariIni = hari[now.getDay()];
-      const tanggal = now.getDate();
-      const namaBulan = bulan[now.getMonth()];
-      const tahun = now.getFullYear();
-
-      dateBox.textContent = `${hariIni}, ${tanggal} ${namaBulan} ${tahun}`;
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      dateEl.textContent = now.toLocaleDateString("id-ID", options);
     }
 
-    function rotateQuotes() {
-      const quoteBox = document.getElementById("quote");
-      let index = 0;
-      quoteBox.textContent = quotes[index];
-
-      setInterval(() => {
-        index = (index + 1) % quotes.length;
-        quoteBox.style.opacity = 0;
-        setTimeout(() => {
-          quoteBox.textContent = quotes[index];
-          quoteBox.style.opacity = 1;
-        }, 500);
-      }, 10000); // setiap 10 detik
+    function updateQuote() {
+      const random = quotes[Math.floor(Math.random() * quotes.length)];
+      quoteEl.textContent = `"${random}"`;
     }
 
-    window.onload = () => {
-      updateGreeting();
-      updateDate();
-      updateClock();
-      rotateQuotes();
-      setInterval(updateClock, 1000);
-    };
+    // Initial run
+    updateGreetingAndBackground();
+    updateClock();
+    updateDate();
+    updateQuote();
+
+    // Interval updates
+    setInterval(updateClock, 1000);
+    setInterval(updateQuote, 10000); // setiap 10 detik ganti quote
   </script>
 </body>
-
 </html>
